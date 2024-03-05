@@ -195,6 +195,7 @@
 .item
 {
     position: relative;
+    padding-right: 52px;
 }
 
 .item + .item
@@ -207,8 +208,8 @@
 {
     position: absolute;
     top: 0;
+    right: 0;
     bottom: 0;
-    left: 100%;
 
     display: flex;
     align-content: center;
@@ -241,6 +242,7 @@
 {
     background: #950fff;
 }
+
 
 
 </style>
