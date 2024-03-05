@@ -1,25 +1,53 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { useGlobalStore } from '@/stores'
+
+import defaultLayout from '@/layouts/Default.vue'
+
 
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
+    {
+		path: '/',
+		name: 'MainPage',
+		component: () => import('../views/MainPage.vue'),
+		meta: {
+			layout: defaultLayout
+		}
+	},
+    {
+		path: '/multisend',
+		name: 'Multisend',
+		component: () => import('../views/Multisend.vue'),
+		meta: {
+			layout: defaultLayout
+		}
+	},
+	{
+		path: '/multisend/:network',
+		name: 'MultisendForm',
+		component: () => import('../views/MultisendForm.vue'),
+		meta: {
+			layout: defaultLayout
+		}
+	}
 ]
 
+
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
+	history: createWebHistory(),
+	routes
 })
+
+
+router.beforeResolve(async (to, from, next) => {
+	let store = useGlobalStore()
+
+	// Current network from url
+	if (to.params.network) {
+		store.currentNetwork = to.params.network
+	}
+
+	next()
+})
+
 
 export default router

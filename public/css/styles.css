@@ -1,0 +1,618 @@
+/*------------------
+    Reset styles
+------------------*/
+*
+{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+    scroll-margin-top: 24px;
+}
+
+*:before,
+*:after
+{
+    box-sizing: border-box;
+}
+
+html
+{
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+        -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    overscroll-behavior: none;
+}
+
+body
+{
+    margin: 0;
+
+    overscroll-behavior: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-overflow-scrolling: touch;
+    text-rendering: optimizeLegibility;
+    text-decoration-skip: objects;
+}
+
+img
+{
+    border-style: none;
+}
+
+textarea
+{
+    overflow: auto;
+}
+
+input,
+textarea,
+input:active,
+textarea:active,
+button
+{
+    margin: 0;
+
+    -webkit-border-radius: 0;
+            border-radius: 0;
+         outline: none transparent !important;
+    box-shadow: none;
+
+    -webkit-appearance: none;
+            appearance: none;
+    -moz-outline: none !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button
+{
+    margin: 0;
+
+    -webkit-appearance: none;
+}
+
+input[type=number]
+{
+    -moz-appearance: textfield;
+}
+
+:focus
+{
+    outline: 0;
+}
+
+:hover,
+:active
+{
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-touch-callout: none;
+}
+
+
+::-ms-clear
+{
+    display: none;
+}
+
+
+
+/*-------------------
+    Global styles
+-------------------*/
+:root
+{
+    --bg: #000;
+    --scroll_width: 17px;
+    --text_color: #fff;
+    --font_size: 16px;
+    --font_size_title: 52px;
+    --font_family: 'Inter', 'Arial', sans-serif;
+    --font_family2: 'IBM Plex Mono', 'Arial', sans-serif;
+}
+
+
+::selection
+{
+    color: #fff;
+    background: #950fff;
+}
+
+::-moz-selection
+{
+    color: #fff;
+    background: #950fff;
+}
+
+
+
+html
+{
+    height: 100%;
+    min-height: -moz-available;
+    min-height: -webkit-fill-available;
+    min-height:         fill-available;
+}
+
+html.custom_scroll ::-webkit-scrollbar
+{
+    width: 8px;
+    height: 8px;
+
+    background-color: var(--bg);
+}
+
+html.custom_scroll ::-webkit-scrollbar-thumb
+{
+    border-radius: 5px;
+    background-color: #950fff;
+}
+
+
+body
+{
+    font: var(--font_size) var(--font_family);
+
+    height: 100%;
+    min-height: -moz-available;
+    min-height: -webkit-fill-available;
+    min-height:         fill-available;
+
+    color: var(--text_color);
+}
+
+body.lock
+{
+    /* position: fixed;
+    top: 0;
+    left: 0; */
+    overflow: hidden;
+
+    padding-right: var(--scroll_width);
+}
+
+
+button
+{
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+
+    display: inline-block;
+
+    cursor: pointer;
+    vertical-align: top;
+
+    color: inherit;
+    border: none;
+    background: none;
+}
+
+
+.wrap
+{
+    position: relative;
+    z-index: 9;
+
+    display: flex;
+    overflow: clip;
+    flex-direction: column;
+
+    min-width: 360px;
+    min-height: 100%;
+
+    background: var(--bg);
+
+    overscroll-behavior: none;
+}
+
+
+.main
+{
+    position: relative;
+
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+
+    overscroll-behavior: none;
+}
+
+
+.cont
+{
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+
+.row
+{
+    display: flex;
+    align-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+
+
+.page_title
+{
+    font-size: 30px;
+    font-weight: 600;
+    line-height: calc(100% + 6px);
+
+    margin-bottom: 40px;
+}
+
+
+
+/*------------------
+    Form elements
+------------------*/
+.form
+{
+    --form_border_color: #191919;
+    --form_focus_color: #950fff;
+    --form_error_color: red;
+    --form_border_radius: 17px;
+    --form_bg_color: #191919;
+    --form_placeholder_color: #fff;
+}
+
+
+.form ::-webkit-input-placeholder
+{
+    color: var(--form_placeholder_color);
+}
+
+.form :-moz-placeholder
+{
+    color: var(--form_placeholder_color);
+}
+
+.form ::-moz-placeholder
+{
+    opacity: 1;
+    color: var(--form_placeholder_color);
+}
+
+.form :-ms-input-placeholder
+{
+    color: var(--form_placeholder_color);
+}
+
+
+.form .columns
+{
+    display: flex;
+    align-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    margin-left: calc(var(--form_columns_offset) * -1);
+
+    --form_columns_offset: 20px;
+}
+
+.form .columns > *
+{
+    width: calc(50% - var(--form_columns_offset));
+    margin-left: var(--form_columns_offset);
+}
+
+
+.form .columns > *.width1of4
+{
+    width: calc(25% - var(--form_columns_offset));
+}
+
+
+.form .line
+{
+    margin-bottom: 20px;
+}
+
+
+.form .label
+{
+    font-size: 14px;
+    line-height: 17px;
+
+    margin-bottom: 8px;
+
+    color: #8e8e8e;
+}
+
+
+.form .field
+{
+    position: relative;
+}
+
+
+.form .input
+{
+    font-family: var(--font_family);
+    font-size: var(--font_size);
+    font-weight: 500;
+
+    display: block;
+
+    width: 100%;
+    height: 55px;
+    padding: 0 9px 2px;
+
+    transition: border-color .2s linear;
+
+    color: var(--text_color);
+    border: 1px solid var(--form_border_color);
+    border-radius: var(--form_border_radius);
+    background: var(--form_bg_color);
+}
+
+.form .input:-webkit-autofill
+{
+    -webkit-box-shadow: inset 0 0 0 50px var(--form_bg_color) !important;
+}
+
+
+.form .amount .input
+{
+    padding-right: 79px;
+}
+
+
+.form .from .input
+{
+    text-transform: uppercase;
+}
+
+
+.form .input:focus,
+.form textarea:focus
+{
+    border-color: var(--form_focus_color);
+}
+
+
+.form .field .max_btn
+{
+    line-height: 19px;
+
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    right: 10px;
+    bottom: 0;
+
+    display: block;
+
+    width: 60px;
+    height: 39px;
+    margin: auto;
+
+    transition: .2s linear;
+    text-transform: uppercase;
+
+    border: 2px solid;
+    border-radius: 14px;
+}
+
+.form .field .max_btn:hover
+{
+    color: #000;
+    border-color: #fff;
+    background: #fff;
+}
+
+.form .field .max_btn:disabled
+{
+    pointer-events: none;
+
+    opacity: .5;
+}
+
+
+.form .field .arr
+{
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    right: 19px;
+    bottom: 0;
+
+    display: flex;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    width: 24px;
+    height: 24px;
+    margin: auto;
+
+    pointer-events: none;
+}
+
+.form .field .arr svg
+{
+    display: block;
+
+    width: 20px;
+    height: 20px;
+}
+
+
+.form .dropdown
+{
+    position: absolute;
+    z-index: 5;
+    top: 100%;
+    left: 0;
+
+    display: none;
+
+    width: 100%;
+    margin-top: 4px;
+    padding: 6px 4px;
+
+    border-radius: 10px;
+    background: #101010;
+}
+
+.form .input.active ~ .dropdown
+{
+    display: block;
+}
+
+
+.form .dropdown .scroll
+{
+    overflow: auto;
+
+    max-height: 194px;
+    padding-right: 4px;
+}
+
+.form .dropdown .scroll::-webkit-scrollbar
+{
+    width: 4px;
+    height: 4px;
+
+    border-radius: 5px;
+}
+
+.form .dropdown .scroll > * + *
+{
+    margin-top: 4px;
+}
+
+
+.form .dropdown .btn
+{
+    font-size: 14px;
+    line-height: 17px;
+
+    display: flex;
+    align-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+
+    width: 100%;
+    padding: 6px;
+
+    transition: background .2s linear;
+    text-align: left;
+    white-space: nowrap;
+    pointer-events: auto;
+
+    border-radius: 8px;
+}
+
+
+.form .dropdown .btn .denom
+{
+    overflow: hidden;
+
+    width: 100%;
+
+    text-transform: uppercase;
+    text-overflow: ellipsis;
+}
+
+
+.form .dropdown .btn .amount
+{
+    margin-left: 20px;
+
+    color: #8e8e8e;
+}
+
+
+.form .dropdown .btn:hover,
+.form .dropdown .btn.active
+{
+    background: #191919;
+}
+
+
+.form .add_items
+{
+    display: flex;
+    align-content: stretch;
+    align-items: stretch;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    padding-top: 20px;
+}
+
+
+.form .add_items .input
+{
+    width: 72px;
+    margin-right: -16px;
+    padding-right: 25px;
+
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+
+.form .add_items .btn
+{
+    font-weight: 500;
+    line-height: 19px;
+
+    display: block;
+
+    padding: 13px 32px;
+
+    color: #fff;
+    border-radius: 14px;
+    background: #950fff;
+}
+
+
+.form .submit
+{
+    padding-top: 20px;
+}
+
+
+.form .submit_btn
+{
+    font-weight: 500;
+    line-height: 19px;
+
+    display: block;
+
+    width: 100%;
+    height: 55px;
+    padding: 9px;
+
+    transition: .2s linear;
+
+    color: #fff;
+    border: 1px solid #950fff;
+    border-radius: 14px;
+}
+
+.form .submit_btn:disabled
+{
+    cursor: default;
+    pointer-events: none;
+}
+
+
+.form .submit_btn:hover
+{
+    background: #950fff;
+}
