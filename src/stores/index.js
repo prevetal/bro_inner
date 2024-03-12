@@ -40,16 +40,16 @@ export const useGlobalStore = defineStore('global', {
 
     actions: {
         // Currencies price
-        async getCurrenciesPrice() {
-            try {
-                // Request
-                await fetch('https://rpc.bronbro.io/price_feed_api/tokens/')
-                    .then(response => response.json())
-                    .then(data => this.prices = data)
-            } catch (error) {
-                console.error(error)
-            }
-        },
+        // async getCurrenciesPrice() {
+        //     try {
+        //         // Request
+        //         await fetch('https://rpc.bronbro.io/price_feed_api/tokens/')
+        //             .then(response => response.json())
+        //             .then(data => this.prices = data)
+        //     } catch (error) {
+        //         console.error(error)
+        //     }
+        // },
 
 
         // Init APP
@@ -58,8 +58,15 @@ export const useGlobalStore = defineStore('global', {
                 // Keplr connect
                 await createKeplrOfflineSinger(this.networks[this.currentNetwork].chainId)
 
-                // Currencies price
-                await this.getCurrenciesPrice()
+                // Get network balance
+                await this.getNetworkBalance()
+
+                // Get formated balances
+                for (const balance of this.balances) {
+                    let result = await denomTraces(balance.denom)
+
+                    balance.base_denom = result.base_denom
+                }
             }
         },
 
@@ -71,18 +78,17 @@ export const useGlobalStore = defineStore('global', {
                 await fetch(`${this.networks[this.currentNetwork].lcd_api}/cosmos/bank/v1beta1/balances/${this.Keplr.account.address}`)
                     .then(response => response.json())
                     .then(async response => {
-                        for (let i = response.balances.length - 1; i >= 0; i--) {
-                            // Get denom
-                            let denom = await denomTraces(response.balances[i].denom)
+                        this.balances = response.balances
 
-                            console.log(response.balances[i].denom)
-                            console.log(denom.base_denom)
+                        // for (let i = response.balances.length - 1; i >= 0; i--) {
+                        //     // Get denom
+                        //     let denom = await denomTraces(response.balances[i].denom)
 
-                            // Only tokens in price feed api
-                            if (this.prices.find(el => el.symbol == denom.base_denom.toUpperCase())) {
-                                this.balances.push(response.balances[i])
-                            }
-                        }
+                        //     // Only tokens in price feed api
+                        //     if (this.prices.find(el => el.symbol == denom.base_denom.toUpperCase())) {
+                        //         this.balances.push(response.balances[i])
+                        //     }
+                        // }
                     })
             } catch (error) {
                 console.error(error)

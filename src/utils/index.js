@@ -52,9 +52,11 @@ export const formatTokenAmount = (amount, tokenName) => {
         formatAmount = 0,
         formatableToken = store.formatableTokens.find(el => el.tokenName == tokenName.toUpperCase())
 
-    formatableToken
-        ? formatAmount = amount / Math.pow(10, formatableToken.exponent)
-        : formatAmount = amount / Math.pow(10, store.prices.find(el => el.symbol == tokenName.toUpperCase()).exponent)
+    // formatableToken
+    //     ? formatAmount = amount / Math.pow(10, formatableToken.exponent)
+    //     : formatAmount = amount / Math.pow(10, store.prices.find(el => el.symbol == tokenName.toUpperCase()).exponent)
+
+    formatAmount = amount
 
     return formatAmount
 }
@@ -85,7 +87,8 @@ export const createKeplrOfflineSinger = async chainId => {
 
 // Prepare Tx
 export const prepareTx = async (msg, gasSimulate = true, chain = store.currentNetwork) => {
-    let store = useGlobalStore()
+    let store = useGlobalStore(),
+        gasUsed = 0
 
     // Create request
     let offlineSigner = await window.getOfflineSignerAuto(store.networks[chain].chainId)
@@ -102,7 +105,7 @@ export const prepareTx = async (msg, gasSimulate = true, chain = store.currentNe
 
     // Simulate gas
     if (gasSimulate) {
-        gasUsed = await client.simulate(generateAddress(store.networks[chain].address_prefix, store.account.currentWallet), msg)
+        gasUsed = await client.simulate(store.Keplr.account.address, msg)
     }
 
     let fee = {
@@ -110,14 +113,14 @@ export const prepareTx = async (msg, gasSimulate = true, chain = store.currentNe
             denom: store.networks[chain].denom,
             amount: '0'
         }],
-        gas: gasSimulate ? Math.round(gasUsed * 1.3).toString() : '1000000'
+        gas: gasSimulate ? Math.round(gasUsed * 1.3).toString() : '100000'
     }
 
     // MENO
     let memo = store.ref ? `bro.${store.ref}` : 'bro.app'
 
     // Sign transaction
-    let txRaw = await client.sign(generateAddress(store.networks[chain].address_prefix, store.account.currentWallet), msg, fee, memo)
+    let txRaw = await client.sign(store.Keplr.account.address, msg, fee, memo)
 
     return { txRaw, client }
 }

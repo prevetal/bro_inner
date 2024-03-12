@@ -258,7 +258,7 @@ button
 {
     --form_border_color: #191919;
     --form_focus_color: #950fff;
-    --form_error_color: red;
+    --form_error_color: #eb5757;
     --form_border_radius: 17px;
     --form_bg_color: #191919;
     --form_placeholder_color: #fff;
@@ -378,6 +378,12 @@ button
 .form textarea:focus
 {
     border-color: var(--form_focus_color);
+}
+
+
+.form .error
+{
+    border-color: var(--form_error_color) !important;
 }
 
 
@@ -615,4 +621,210 @@ button
 .form .submit_btn:hover
 {
     background: #950fff;
+}
+
+
+
+/*------------------
+    Notification
+------------------*/
+.vue-notification-group
+{
+    padding: 24px;
+
+    pointer-events: none;
+}
+
+.vue-notification-wrapper + .vue-notification-wrapper
+{
+    margin-top: 8px;
+}
+
+
+.notification
+{
+    position: relative;
+
+    display: flex;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    padding: 14px;
+
+    pointer-events: auto;
+
+    border-radius: 20px;
+    background: #141414;
+}
+
+
+.notification .close
+{
+    position: absolute;
+    top: 17px;
+    right: 10px;
+
+    display: flex;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+
+    color: #555;
+}
+
+.notification .close svg
+{
+    display: block;
+
+    width: 30px;
+    height: 30px;
+}
+
+
+.notification .icon
+{
+    display: flex;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+
+    border-radius: 50%;
+    background: #950fff;
+}
+
+.notification .icon.green
+{
+    background: #1bc562;
+}
+
+.notification .icon.red
+{
+    background: #eb5757;
+}
+
+.notification .icon svg
+{
+    display: block;
+
+    width: 20px;
+    height: 20px;
+}
+
+.notification .icon + *
+{
+    width: calc(100% - 40px) !important;
+    margin: 0 !important;
+}
+
+
+.notification .chain
+{
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 19px;
+}
+
+.notification .chain::first-letter
+{
+    text-transform: uppercase;
+}
+
+.notification .chain:empty
+{
+    display: none;
+}
+
+
+.notification .tx_type
+{
+    font-size: 12px;
+    line-height: 130%;
+
+    color: #8e8e8e;
+}
+
+.notification .tx_type:empty
+{
+    display: none;
+}
+
+
+.notification .title
+{
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 110%;
+
+    width: 100%;
+    margin-top: 10px;
+}
+
+.notification .title:empty
+{
+    display: none;
+}
+
+
+.notification .text
+{
+    font-size: 12px;
+    line-height: 150%;
+
+    width: 100%;
+    margin-top: 4px;
+
+    opacity: .4;
+}
+
+.notification .text:empty
+{
+    display: none;
+}
+
+
+.notification .explorer
+{
+    font-size: 12px;
+    line-height: 150%;
+
+    display: flex;
+
+    margin-top: 8px;
+
+    color: #950fff;
+}
+
+
+.notification .explorer a
+{
+    display: flex;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    text-decoration: none;
+
+    color: currentColor;
+}
+
+
+.notification .explorer svg
+{
+    display: block;
+
+    width: 12px;
+    height: 12px;
+    margin-left: 4px;
 }

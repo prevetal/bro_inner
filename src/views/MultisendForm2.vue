@@ -7,8 +7,18 @@
 
     <form v-else action="" class="form" @submit.prevent="onSubmit()">
         <div class="item" v-for="(item, itemIndex) in data" :key="itemIndex">
-            <div class="columns">
-                <div class="line from width1of4">
+            <div class="line">
+                <div class="label">
+                    {{ $t('message.multisend_form_to_address_label') }}
+                </div>
+
+                <div class="field">
+                    <input type="text" v-model="item.to" class="input" @input="validateAddress($event, itemIndex)">
+                </div>
+            </div>
+
+            <!-- <div class="columns">
+                <div class="line from">
                     <div class="label">
                         {{ $t('message.multisend_form_from_label') }}
                     </div>
@@ -34,17 +44,7 @@
                     </div>
                 </div>
 
-                <div class="line">
-                    <div class="label">
-                        {{ $t('message.multisend_form_to_address_label') }}
-                    </div>
-
-                    <div class="field">
-                        <input type="text" v-model="item.to" class="input" @input="validateAddress($event, itemIndex)">
-                    </div>
-                </div>
-
-                <div class="line amount width1of4">
+                <div class="line amount">
                     <div class="label">
                         {{ $t('message.multisend_form_amount_label') }}
                     </div>
@@ -57,6 +57,56 @@
                         </button>
                     </div>
                 </div>
+
+                <button type="button" class="delete_btn">
+                    <svg><use xlink:href="@/assets/sprite.svg#ic_close"></use></svg>
+                </button>
+            </div> -->
+
+            <div class="columns">
+                <div class="line from">
+                    <div class="label">
+                        {{ $t('message.multisend_form_from_label') }}
+                    </div>
+
+                    <div class="field">
+                        <input type="text" v-model="item.from" class="input" @focus.self="showDropdown($event)">
+
+                        <div class="arr">
+                            <svg><use xlink:href="@/assets/sprite.svg#ic_arr_down"></use></svg>
+                        </div>
+
+                        <div class="dropdown">
+                            <div class="scroll">
+                                <div v-for="(balance, balanceIndex) in store.balances" :key="balanceIndex">
+                                    <button type="button" class="btn" @click.prevent="setBalance(itemIndex, balance.denom)">
+                                        <div class="denom">{{ formatTokenName(balance.base_denom) }}</div>
+
+                                        <div class="amount">{{ formatTokenAmount(balance.amount, balance.base_denom) }}</div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="line amount">
+                    <div class="label">
+                        {{ $t('message.multisend_form_amount_label') }}
+                    </div>
+
+                    <div class="field">
+                        <input type="text" v-model="item.amount" class="input" @input="setAmount($event, itemIndex)" placeholder="0">
+
+                        <button type="button" class="max_btn" @click.prevent="setMaxAmount(itemIndex)">
+                            {{ $t('message.btn_max') }}
+                        </button>
+                    </div>
+                </div>
+
+                <button type="button" class="delete_btn" style="transform: rotate(45deg);">
+                    <svg><use xlink:href="@/assets/sprite.svg#ic_close"></use></svg>
+                </button>
             </div>
 
             <button type="button" class="delete_btn" v-if="itemIndex" @click="deleteItem(itemIndex)">
@@ -101,11 +151,6 @@
         data = reactive([
             {
                 to: 'cosmos15p6m8taywua86afxqwu25fx9wu3mpx0dal70kr',
-                amount: '0',
-                from: 'uatom'
-            },
-            {
-                to: 'cosmos1v6ru37qy2xka5nt6rmmtdcs4tzwane0kw03k3s',
                 amount: '0',
                 from: 'uatom'
             },
@@ -420,7 +465,8 @@
 }
 
 
-.item
+.item,
+.columns
 {
     position: relative;
 
@@ -436,9 +482,8 @@
 .delete_btn
 {
     position: absolute;
-    top: 0;
+    top: 36px;
     right: 0;
-    bottom: 0;
 
     display: flex;
     align-content: center;
@@ -448,7 +493,6 @@
 
     width: 32px;
     height: 32px;
-    margin: auto 0;
     margin-left: 20px;
 
     transition: .2s linear;
@@ -471,8 +515,4 @@
 {
     background: #950fff;
 }
-
-
-
-
 </style>

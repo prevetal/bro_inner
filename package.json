@@ -7,8 +7,11 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "@cosmjs/encoding": "^0.32.2",
+    "@cosmjs/cosmwasm-stargate": "^0.32.3",
+    "@cosmjs/encoding": "^0.32.3",
+    "@cosmjs/proto-signing": "^0.32.3",
     "@cosmjs/stargate": "^0.29.0",
+    "@kyvg/vue3-notification": "^3.2.0",
     "@vueuse/core": "^10.9.0",
     "core-js": "^3.8.3",
     "cosmjs-types": "^0.9.0",

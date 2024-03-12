@@ -28,6 +28,14 @@ const routes = [
 		meta: {
 			layout: defaultLayout
 		}
+	},
+	{
+		path: '/multisend2/:network',
+		name: 'MultisendForm2',
+		component: () => import('../views/MultisendForm2.vue'),
+		meta: {
+			layout: defaultLayout
+		}
 	}
 ]
 
